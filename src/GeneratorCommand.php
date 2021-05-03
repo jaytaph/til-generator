@@ -3,13 +3,11 @@
 namespace App;
 
 use League\CommonMark\CommonMarkConverter;
-use Parsedown;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 class GeneratorCommand extends Command
@@ -26,7 +24,7 @@ class GeneratorCommand extends Command
     {
         parent::__construct();
 
-        $loader = new FilesystemLoader(__DIR__ . '/resources/twig');
+        $loader = new FilesystemLoader(__DIR__ . '/resources/twig/default');
         $this->twig = new Environment($loader, []);
     }
 
