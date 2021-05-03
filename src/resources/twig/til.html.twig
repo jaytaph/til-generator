@@ -1,0 +1,50 @@
+<html lang="en">
+
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-twilight.min.css" rel="stylesheet"/>
+  <title>{{ title }}</title>
+
+  <style>
+      body {
+          margin: 40px auto;
+          max-width: 650px;
+          line-height: 1.6;
+          font-size: 18px;
+          color: #444;
+          padding: 0 10px
+      }
+
+      h1, h2, h3 {
+          line-height: 1.2
+      }
+
+      @media (prefers-color-scheme: dark) {
+          body {
+              color: #ccc;
+              background: black
+          }
+
+          a:link {
+              color: #5bf
+          }
+
+          a:visited {
+              color: #ccf
+          }
+      }
+  </style>
+</head>
+
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+{{ content|raw }}
+
+<hr>
+
+<small>Generated with TIL at {{ "now"|date }}</small>
+
+</body>
+</html>

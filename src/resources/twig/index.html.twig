@@ -1,0 +1,54 @@
+<html>
+
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-dark.min.css" rel="stylesheet"/>
+
+  <style type="text/css">
+      body {
+          margin: 40px auto;
+          max-width: 650px;
+          line-height: 1.6;
+          font-size: 18px;
+          color: #444;
+          padding: 0 10px
+      }
+
+      h1, h2, h3 {
+          line-height: 1.2
+      }
+
+      @media (prefers-color-scheme: dark) {
+          body {
+              color: #ccc;
+              background: black
+          }
+
+          a:link {
+              color: #5bf
+          }
+
+          a:visited {
+              color: #ccf
+          }
+      }
+  </style>
+</head>
+
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<h1>Today i learned</h1>
+
+{% for k,v in tils %}
+  <h2>{{ k | title }}</h2>
+  <ul>
+    {% for item in v %}
+      <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endfor %}
+
+</body>
+</html>
