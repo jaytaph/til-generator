@@ -1,0 +1,65 @@
+<html lang="en">
+
+<head>
+  <title>Today I Learned</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-dark.min.css" rel="stylesheet"/>
+
+  <style>
+      body {
+          margin: 40px auto;
+          max-width: 650px;
+          line-height: 1.6;
+          font-size: 18px;
+          color: #FFF;
+          padding: 0 10px;
+          background-color: #222;
+      }
+
+      h1, h2, h3 {
+          line-height: 1.2
+      }
+
+      @media (prefers-color-scheme: dark) {
+          body {
+              color: #ccc;
+              background: black
+          }
+
+          a:link {
+              color: #5bf
+          }
+
+          a:visited {
+              color: #ccf
+          }
+      }
+  </style>
+</head>
+
+<body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+  <h1>Today i learned</h1>
+
+  <p>A collection of snippets and interesting facts that I learned and want to keep. There are currently <strong>{{ count }}</strong> TILs available. This site is inspired by <a href="https://github.com/jbranchaud/til">Josh Branchaud</a>.</p>
+
+  <p>This collection is auto generated with the TilGenerator, which can be found at <a href="https://github.com/jaytaph/til-generator">https://github.com/jaytaph/til-generator</a>.
+
+{% for k,v in tils %}
+  <h2>{{ k | title }}</h2>
+  <ul>
+    {% for item in v %}
+      <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endfor %}
+
+  <hr>
+
+  <small>Generated with <a href="https://github.com/jaytaph/til-generator">TIL generator</a> at {{ "now"|date }}</small>
+
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+    "chmod": "0755",
+    "output": "til-generator.phar",
+    "compression": "GZ",
+    "algorithm": "sha512"
+}

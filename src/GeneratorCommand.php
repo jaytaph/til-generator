@@ -4,7 +4,9 @@ namespace App;
 
 use League\CommonMark\CommonMarkConverter;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Twig\Environment;
@@ -23,27 +25,42 @@ class GeneratorCommand extends Command
     public function __construct()
     {
         parent::__construct();
-
-        $loader = new FilesystemLoader(__DIR__ . '/resources/twig/default');
-        $this->twig = new Environment($loader, []);
     }
 
 
     protected function configure(): void
     {
-        $this->setDescription('Generate html from your current TILs');
+        $this->setDescription('Generate html from your current TILs')
+            ->addArgument('src', InputArgument::REQUIRED, 'Source directory')
+            ->addOption('theme', 't', InputOption::VALUE_OPTIONAL, 'Theme to use', 'default')
+            ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'Output directory', './_output')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $tils = $this->findTils('tils');
+        $theme = 'default';
+        if ($input->hasOption('theme')) {
+            $theme = $input->getOption('theme');
+            if (! file_exists(__DIR__ . '/resources/twig/' . $theme)) {
+                $output->writeln('<error>Error: cannot find theme: '.$theme.'</error>');
+                return 1;
+            }
+        }
+        $loader = new FilesystemLoader(__DIR__ . '/resources/twig/' . $theme);
+        $this->twig = new Environment($loader, []);
 
-        $outputPath = '_output';
+        $tils = $this->findTils($input->getArgument('src'));
+
+        $outputPath = './_output';
+        if ($input->hasOption('output')) {
+            $outputPath = $input->getOption('output');
+        }
         @mkdir($outputPath);
         $this->generatePosts($tils, $outputPath);
         $this->generateIndex($tils, $outputPath);
 
-        return Command::SUCCESS;
+        return 0;
     }
 
     protected function findTils(string $dir): array
@@ -62,7 +79,7 @@ class GeneratorCommand extends Command
             $content = file_get_contents($file->getPathname());
 
             $title = $file->getFilename();
-            if (preg_match("/^#\s+(.*)$/m", $content, $match)) {
+            if (preg_match('/^#\s+(.*)$/m', $content, $match)) {
                 $title = $match[1];
             }
 
@@ -80,7 +97,7 @@ class GeneratorCommand extends Command
 
     protected function generateIndex(array $tils, string $path)
     {
-        $template = $this->twig->load("index.html.twig");
+        $template = $this->twig->load('index.html.twig');
 
         $count = 0;
         foreach ($tils as $v) {
@@ -105,7 +122,7 @@ class GeneratorCommand extends Command
 
                 $html = $converter->convertToHtml($content);
 
-                $template = $this->twig->load("til.html.twig");
+                $template = $this->twig->load('til.html.twig');
                 $out = $template->render([
                     'title' => $til['title'],
                     'content' => $html,

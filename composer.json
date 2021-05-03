@@ -11,10 +11,14 @@
             "App\\": "src"
         }
     },
+    "minimum-stability": "dev",
     "require": {
-        "symfony/finder": "^5.2",
+        "symfony/finder": "^4.4",
         "twig/twig": "^3.3",
-        "symfony/console": "^5.2",
+        "symfony/console": "^4.4",
         "league/commonmark": "^1.6"
+    },
+    "require-dev": {
+        "humbug/box": "3.x-dev"
     }
 }

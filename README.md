@@ -1,14 +1,25 @@
 # Today I Learned
+A simple generator tool to generate small snippets (TILs) into a static site.
 
 ## Usage
 
-    $ composer install
+    $ til-generator.phar generate <srcdir> 
+
+You can use a different theme:
+
+    $ til-generator.phar generate <srcdir> --theme <theme> 
+
+Check out which themes are available:
+
+    $ til-generator.phar list-themes
+
+
+## Compile
     
-    $ php til.php generate
+    $ composer install
+    $ ./vendor/bin/box compile
 
-will generate all tils found in the `tils` directory into the `_output` directory. Note the first 
-H1 header ('#') in the markdown files will be used as the title.
-
+This will generate a phar file which can be used to distribute.
 
 ## Bugs
 
