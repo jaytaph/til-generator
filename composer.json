@@ -12,7 +12,6 @@
         }
     },
     "require": {
-        "erusev/parsedown": "^1.7",
         "symfony/finder": "^5.2",
         "twig/twig": "^3.3",
         "symfony/console": "^5.2",

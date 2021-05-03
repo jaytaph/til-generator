@@ -27,11 +27,7 @@ class GeneratorCommand extends Command
         parent::__construct();
 
         $loader = new FilesystemLoader(__DIR__ . '/resources/twig');
-        $this->twig = new Environment($loader, [
-            'debug' => true,
-        ]);
-
-        $this->twig->addExtension(new DebugExtension());
+        $this->twig = new Environment($loader, []);
     }
 
 
@@ -88,16 +84,18 @@ class GeneratorCommand extends Command
     {
         $template = $this->twig->load("index.html.twig");
 
-        $out = $template->render(['tils' => $tils]);
+        $count = 0;
+        foreach ($tils as $v) {
+            $count += count($v);
+        }
+
+        $out = $template->render(['count' => $count, 'tils' => $tils]);
         file_put_contents($path . '/index.html', $out);
     }
 
     protected function generatePosts(array $tils, string $path)
     {
-        $pd = new Parsedown();
-
         $converter = new CommonMarkConverter([
-            //'html_input' => 'strip',
             'allow_unsafe_links' => true,
         ]);
 
@@ -107,7 +105,6 @@ class GeneratorCommand extends Command
             foreach ($entries as $til) {
                 $content = file_get_contents($til['filename']);
 
-                //$html = $pd->text($content);
                 $html = $converter->convertToHtml($content);
 
                 $template = $this->twig->load("til.html.twig");
@@ -115,7 +112,6 @@ class GeneratorCommand extends Command
                     'title' => $til['title'],
                     'content' => $html,
                 ]);
-
 
                 file_put_contents($path.'/'.$til['url'], $out);
             }
