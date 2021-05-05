@@ -1,0 +1,6 @@
+# Press twice for double quotes
+
+Sometimes in Windows you need to press space after typing a double/single quote, it will wait for another character so it can type accents and such. Normally, this is remedied by 
+changing your language from `US INTERNATIONAL` to `US (QWERTY)`. But even then it happens sometimes. THis is most likely due to the fact that your keyboard mapping is set incorrect.
+
+win-space will let you toggle between the different mappings. I still haven't figured out how to remove those mappings there and just use a single mapping instead.
